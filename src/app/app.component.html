@@ -34,6 +34,18 @@
     align-items: center;
   }
 
+  input.equalSize{
+    width: 22px;
+    height: 22px;
+  }
+  .nonChecked {
+    text-decoration: none;
+  }
+
+  .checked {
+    text-decoration: line-through;
+  }
+
 </style>
 
 <!doctype html>
@@ -54,8 +66,23 @@
   <span>Welcome to ista!</span>
 </div>
 
-<div class="content" role="main">
-</div>
+<!-- Simple TODO list by Alejandro Martínez Soriano -->
 
+<div class="content" role="main">
+
+  <form (ngSubmit)="addItem()">
+    <input type="text" name="newItem" [(ngModel)]="name" placeholder="New TODO item" required="true"><br>
+    <span *ngIf="errormsg">Input needed</span>
+  </form>
+  <div>
+    <ul *ngFor="let item of list"><!--  -->
+      <li id="{{item.id}}" [className]="[item.done ? 'checked' : 'nonChecked']">
+        {{item.itemName}}<!--  -->
+        <input type="checkbox" (change)="statusChange(item)" class="equalSize" [(ngModel)]="item.done">
+        <button type="button" (click)="deleteItem(item)">x</button>
+      </li>
+    </ul>
+  </div>
+</div>
 
 <router-outlet></router-outlet>
